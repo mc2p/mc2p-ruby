@@ -5,12 +5,6 @@ module MC2P
     @authorization_header = 'AppKeys'
     @api_url = 'api.mychoice2pay.com/v1'
 
-    attr_accessor :post
-    attr_accessor :post_200
-    attr_accessor :get
-    attr_accessor :patch
-    attr_accessor :delete
-
     # Initializes an api request
     # Params:
     # +key+:: key to connect with API
