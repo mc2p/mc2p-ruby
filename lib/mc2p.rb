@@ -9,7 +9,7 @@ require_relative 'resources'
 require_relative 'notification'
 
 module MC2P
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
 
   # MC2P - class used to manage the communication with MyChoice2Pay API
   class MC2PClient
