@@ -163,8 +163,11 @@ module MC2P
 
   # Add property to get pay_url based on token
   class PayURLMixin < ObjectItemMixin
-    @pay_url = 'https://pay.mychoice2pay.com/#/%s'
-    @iframe_url = 'https://pay.mychoice2pay.com/#/%s/iframe'
+    def initialize(json_dict, resource)
+      super(json_dict, resource)
+      @pay_url = 'https://pay.mychoice2pay.com/#/%s'
+      @iframe_url = 'https://pay.mychoice2pay.com/#/%s/iframe'
+    end
 
     # Returns: pay url
     def pay_url
@@ -181,11 +184,6 @@ module MC2P
 
   # Basic info of the resource
   class ResourceMixin
-    @path = '/resource/'
-    @object_item_class = nil
-    @paginator_class = nil
-    @api_request = nil
-
     # Initializes a resource
     # Params:
     # +api_request+:: Api request used to make all the requests to the API
@@ -212,14 +210,16 @@ module MC2P
     # +data+:: data passed in the request
     # +resource_id+:: id to use on the requested url
     # Returns: an object item that represent the item returned
-    def _one_item(func, data=nil, resource_id=nil)
+    def _one_item(func, data = nil, resource_id = nil)
       url = resource_id.nil? ? @path : detail_url(resource_id)
 
-      obj_data = func(
+      obj_data = @api_request.send(
+        func,
         url,
         data,
-        resource: self,
-        resource_id: resource_id
+        nil,
+        self,
+        resource_id
       )
 
       @object_item_class.new(obj_data, self)
@@ -232,7 +232,7 @@ module MC2P
     # +resource_id+:: id to request
     # Returns: an object item class with the response of the server
     def detail(resource_id)
-      _one_item(@api_request.get,
+      _one_item('get',
                 resource_id: resource_id)
     end
   end
@@ -243,8 +243,13 @@ module MC2P
     # +abs_url+:: if is passed the request is sent to this url
     # Returns: a paginator class with the response of the server
     def list(abs_url = nil)
-      url = abs_url.nil? ? @path : abs_url;
-      json_dict = @api_request.get(abs_url: url, resource: self)
+      url = abs_url.nil? ? @path : abs_url
+      json_dict = @api_request.get(
+        nil,
+        nil,
+        url,
+        self
+      )
 
       @paginator_class.new(
         json_dict,
@@ -260,8 +265,8 @@ module MC2P
     # +data+:: data used on the request
     # Returns: an object item class with the response of the server
     def create(data)
-      _one_item(@api_request.post,
-                data: data)
+      _one_item('post',
+                data)
     end
   end
 
@@ -272,9 +277,9 @@ module MC2P
     # +data+:: data used on the request
     # Returns: an object item class with the response of the server
     def change(resource_id, data)
-      _one_item(@api_request.patch,
-                data: data,
-                resource_id: resource_id)
+      _one_item('patch',
+                data,
+                resource_id)
     end
   end
 
@@ -283,8 +288,9 @@ module MC2P
     # Params:
     # +resource_id+::id to request
     def delete(resource_id)
-      _one_item(@api_request.delete,
-                resource_id: resource_id)
+      _one_item('delete',
+                nil,
+                resource_id)
     end
   end
 
@@ -306,11 +312,13 @@ module MC2P
     # Returns: response dictionary
     def _one_item_action(func, resource_id, action, data = nil)
       url = detail_action_url(resource_id, action)
-      func(
+      @api_request.send(
+        func,
         url,
         data,
-        resource: self,
-        resource_id: resource_id
+        nil,
+        self,
+        resource_id
       )
     end
   end
@@ -322,7 +330,7 @@ module MC2P
     # +data+:: data to send
     # Returns: response dictionary
     def refund(resource_id, data = nil)
-      _one_item_action(@api_request.post200,
+      _one_item_action('post200',
                        resource_id,
                        'refund',
                        data)
@@ -333,7 +341,7 @@ module MC2P
     # +data+:: data to send
     # Returns: response dictionary
     def capture(resource_id, data = nil)
-      _one_item_action(@api_request.post200,
+      _one_item_action('post200',
                        resource_id,
                        'capture',
                        data)
@@ -344,7 +352,7 @@ module MC2P
     # +data+:: data to send
     # Returns: response dictionary
     def void(resource_id, data = nil)
-      _one_item_action(@api_request.post200,
+      _one_item_action('post200',
                        resource_id,
                        'void',
                        data)
@@ -359,7 +367,7 @@ module MC2P
     # +data+:: data to send
     # Returns: response dictionary
     def card(resource_id, gateway_code, data = nil)
-      _one_item_action(@api_request.post,
+      _one_item_action('post',
                        resource_id,
                        "card/#{gateway_code}",
                        data)
@@ -370,7 +378,7 @@ module MC2P
     # +data+:: data to send
     # Returns: response dictionary
     def share(resource_id, data = nil)
-      _one_item_action(@api_request.post,
+      _one_item_action('post',
                        resource_id,
                        'share',
                        data)
