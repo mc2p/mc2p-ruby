@@ -2,9 +2,6 @@ module MC2P
 
   # API request - class used to connect with the API
   class APIRequest
-    @authorization_header = 'AppKeys'
-    @api_url = 'api.mychoice2pay.com/v1'
-
     # Initializes an api request
     # Params:
     # +key+:: key to connect with API
@@ -12,6 +9,9 @@ module MC2P
     def initialize(key, secret_key)
       @key = key
       @secret_key = secret_key
+
+      @authorization_header = 'AppKeys'
+      @api_url = 'api.mychoice2pay.com/v1'
     end
 
     # Creates the headers to include in the request
@@ -35,24 +35,24 @@ module MC2P
     # +method+:: method to make the request
     # +status_code+:: value to check if the request receive a correct response
     # Returns: a function to make the request
-    def _request(method, status_code=200, path=nil, data=nil,
-                 abs_url=nil, resource=nil, resource_id=nil)
+    def _request(method, status_code = 200, path = nil, data = nil,
+                 abs_url = nil, resource = nil, resource_id = nil)
       url = abs_url.nil? ? get_abs_url(path) : abs_url
 
       request = Unirest.send(method.downcase, url,
                              headers: headers,
-                             parameters: data)
+                             parameters: data.to_json)
 
       if request.code != status_code
         raise InvalidRequestError.new(
           "Error #{request.code}",
-          json_body: request.to_json,
-          resource: resource,
-          resource_id: resource_id
+          request.body,
+          resource,
+          resource_id
         )
       end
 
-      status_code != 204 ? request.to_json : {}
+      status_code != 204 ? request.body : {}
     end
 
     # POST 201 function
