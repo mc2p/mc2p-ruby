@@ -5,6 +5,8 @@
 
 MyChoice2Pay Ruby provides integration access to the MyChoice2Pay API.
 
+[![Build Status](https://travis-ci.org/mc2p/mc2p-ruby.svg?branch=master)](https://travis-ci.org/mc2p/mc2p-ruby)
+
 # Installation
 
 Add this line to your application's Gemfile:
