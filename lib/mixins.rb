@@ -2,19 +2,19 @@ module MC2P
 
   # Basic info of the object item
   class ObjectItemMixin
-    @@id_property = 'id'
     attr_accessor :json_dict
     attr_accessor :resource
     attr_accessor :_deleted
 
-    def initialize(json_dict, resource)
+    def initialize(json_dict, resource, id_property = 'id')
       @json_dict = json_dict
       @resource = resource
       @_deleted = nil
+      @id_property = id_property
     end
 
     def id_required_and_not_deleted
-      if not @json_dict.fetch(@@id_property, false)
+      if not @json_dict.fetch(@id_property, false)
         raise BadUseError('Object don\'t have ID')
       end
       if @_deleted
@@ -34,7 +34,7 @@ module MC2P
     def delete
       id_required_and_not_deleted
       @resource.delete(
-        @json_dict[@@id_property]
+        @json_dict[@id_property]
       )
       @_deleted = true
     end
@@ -46,7 +46,7 @@ module MC2P
     def retrieve
       id_required_and_not_deleted
       obj = @resource.detail(
-        @json_dict[@@id_property]
+        @json_dict[@id_property]
       )
       @json_dict = obj.json_dict
     end
@@ -64,7 +64,7 @@ module MC2P
 
     # Executes the internal function _create if the object item don't have id
     def save
-      if not @json_dict.fetch(@@id_property, false)
+      if not @json_dict.fetch(@id_property, false)
         _create
       end
     end
@@ -76,7 +76,7 @@ module MC2P
     def _change
       id_required_and_not_deleted
       obj = @resource.change(
-        @json_dict[@@id_property],
+        @json_dict[@id_property],
         @json_dict
       )
       @json_dict = obj.json_dict
@@ -85,7 +85,7 @@ module MC2P
     # Executes the internal function _create if the object item don't have id,
     # in other case, call to _change
     def save
-      if @json_dict.fetch(@@id_property, false)
+      if @json_dict.fetch(@id_property, false)
         _change
       else
         _create
@@ -102,7 +102,7 @@ module MC2P
     def refund(data = nil)
       id_required_and_not_deleted
       @resource.refund(
-        @json_dict[@@id_property],
+        @json_dict[@id_property],
         data
       )
     end
@@ -114,7 +114,7 @@ module MC2P
     def capture(data = nil)
       id_required_and_not_deleted
       @resource.capture(
-        @json_dict[@@id_property],
+        @json_dict[@id_property],
         data
       )
     end
@@ -126,7 +126,7 @@ module MC2P
     def void(data = nil)
       id_required_and_not_deleted
       @resource.void(
-        @json_dict[@@id_property],
+        @json_dict[@id_property],
         data
       )
     end
@@ -142,7 +142,7 @@ module MC2P
     def card(gateway_code, data = nil)
       id_required_and_not_deleted
       @resource.card(
-        @json_dict[@@id_property],
+        @json_dict[@id_property],
         gateway_code,
         data
       )
@@ -155,7 +155,7 @@ module MC2P
     def share(data = nil)
       id_required_and_not_deleted
       @resource.share(
-        @json_dict[@@id_property],
+        @json_dict[@id_property],
         data
       )
     end
@@ -233,7 +233,8 @@ module MC2P
     # Returns: an object item class with the response of the server
     def detail(resource_id)
       _one_item('get',
-                resource_id: resource_id)
+                nil,
+                resource_id)
     end
   end
 
