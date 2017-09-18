@@ -14,17 +14,14 @@ module MC2P
     end
 
     def id_required_and_not_deleted
-      if not @json_dict.fetch(@id_property, false)
-        raise BadUseError('Object don\'t have ID')
-      end
-      if @_deleted
-        raise BadUseError('Object deleted')
-      end
+      raise BadUseError('Object don\'t have ID') unless
+          @json_dict.fetch(@id_property, false)
+      raise BadUseError('Object deleted') unless @_deleted
     end
 
     # Returns: Name of the object and content
     def to_s
-      "%s #{@json_dict}" % self.class.name
+      "#{self.class.name} #{@json_dict}"
     end
   end
 
@@ -64,9 +61,7 @@ module MC2P
 
     # Executes the internal function _create if the object item don't have id
     def save
-      if not @json_dict.fetch(@id_property, false)
-        _create
-      end
+      _create unless @json_dict.fetch(@id_property, false)
     end
   end
 
@@ -250,12 +245,7 @@ module MC2P
         abs_url,
         self
       )
-
-      @paginator_class.new(
-        json_dict,
-        @object_item_class,
-        self
-      )
+      @paginator_class.new(json_dict, @object_item_class, self)
     end
   end
 

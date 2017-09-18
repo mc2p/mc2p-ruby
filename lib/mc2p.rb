@@ -35,17 +35,39 @@ module MC2P
     def initialize(key, secret_key)
       @api_request = APIRequest.new(key, secret_key)
 
-      @product_resource = ProductResource.new(@api_request, '/product/', Product)
-      @plan_resource = PlanResource.new(@api_request, '/plan/', Plan)
-      @tax_resource = TaxResource.new(@api_request, '/tax/', Tax)
-      @shipping_resource = ShippingResource.new(@api_request, '/shipping/', Shipping)
-      @coupon_resource = CouponResource.new(@api_request, '/coupon/', Coupon)
-      @transaction_resource = TransactionResource.new(@api_request, '/transaction/', Transaction)
-      @subscription_resource = SubscriptionResource.new(@api_request, '/subscription/', Subscription)
-      @sale_resource = SaleResource.new(@api_request, '/sale/', Sale)
-      @currency_resource = CurrencyResource.new(@api_request, '/currency/', Currency)
-      @gateway_resource = GatewayResource.new(@api_request, '/gateway/', Gateway)
-      @pay_data_resource = PayDataResource.new(@api_request, '/pay/', PayData)
+      @product_resource = ProductResource.new(@api_request,
+                                              '/product/',
+                                              Product)
+      @plan_resource = PlanResource.new(@api_request,
+                                        '/plan/',
+                                        Plan)
+      @tax_resource = TaxResource.new(@api_request,
+                                      '/tax/',
+                                      Tax)
+      @shipping_resource = ShippingResource.new(@api_request,
+                                                '/shipping/',
+                                                Shipping)
+      @coupon_resource = CouponResource.new(@api_request,
+                                            '/coupon/',
+                                            Coupon)
+      @transaction_resource = TransactionResource.new(@api_request,
+                                                      '/transaction/',
+                                                      Transaction)
+      @subscription_resource = SubscriptionResource.new(@api_request,
+                                                        '/subscription/',
+                                                        Subscription)
+      @sale_resource = SaleResource.new(@api_request,
+                                        '/sale/',
+                                        Sale)
+      @currency_resource = CurrencyResource.new(@api_request,
+                                                '/currency/',
+                                                Currency)
+      @gateway_resource = GatewayResource.new(@api_request,
+                                              '/gateway/',
+                                              Gateway)
+      @pay_data_resource = PayDataResource.new(@api_request,
+                                               '/pay/',
+                                               PayData)
     end
 
     def _wrapper(cls, resource, data)

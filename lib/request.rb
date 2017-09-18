@@ -1,5 +1,4 @@
 module MC2P
-
   # API request - class used to connect with the API
   class APIRequest
     # Initializes an api request
@@ -85,5 +84,4 @@ module MC2P
       _request('delete', 204, path, data, abs_url, resource, resource_id)
     end
   end
-
 end

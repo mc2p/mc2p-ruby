@@ -1,5 +1,4 @@
 module MC2P
-
   # Notification data - class to manage notification from MyChoice2Pay
   class NotificationData
     # Initializes a notification data
@@ -40,7 +39,7 @@ module MC2P
     def transaction
       ret = nil
       if type == 'P'
-        ret = @mc2p.transaction({'id' => @json_body['id']})
+        ret = @mc2p.transaction('id' => @json_body['id'])
         ret.retrieve
       end
       ret
@@ -50,7 +49,7 @@ module MC2P
     def subscription
       ret = nil
       if type == 'S'
-        ret = @mc2p.subscription({'id' => @json_body['id']})
+        ret = @mc2p.subscription('id' => @json_body['id'])
         ret.retrieve
       end
       ret
@@ -60,7 +59,7 @@ module MC2P
     def sale
       ret = nil
       if @json_body.include?('sale_id')
-        ret = @mc2p.sale({'id' => @json_body['sale_id']})
+        ret = @mc2p.sale('id' => @json_body['sale_id'])
         ret.retrieve
       end
       ret

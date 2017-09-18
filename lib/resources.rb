@@ -1,38 +1,30 @@
 module MC2P
-
   # Product resource
   class ProductResource < CRUDResource
-
   end
 
   # Plan resource
   class PlanResource < CRUDResource
-
   end
 
   # Tax resource
   class TaxResource < CRUDResource
-
   end
 
   # Shipping resource
   class ShippingResource < CRUDResource
-
   end
 
   # Coupon resource
   class CouponResource < CRUDResource
-
   end
 
   # Transaction resource
   class TransactionResource < CRResource
-
   end
 
   # Subscription resource
   class SubscriptionResource < CRResource
-
   end
 
   # Sale resource
@@ -44,7 +36,9 @@ module MC2P
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
       super(api_request, path, object_item_class)
-      @rcv_resource_mixin = RefundCaptureVoidResourceMixin.new(api_request, path, object_item_class, @paginator_class)
+      @rcv_resource_mixin = RefundCaptureVoidResourceMixin.new(api_request, path,
+                                                               object_item_class,
+                                                               @paginator_class)
     end
 
     # Params:
@@ -74,12 +68,10 @@ module MC2P
 
   # Currency resource
   class CurrencyResource < ReadOnlyResource
-
   end
 
   # Gateway resource
   class GatewayResource < ReadOnlyResource
-
   end
 
   # PayData resource
@@ -91,7 +83,9 @@ module MC2P
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
       super(api_request, path, object_item_class)
-      @cs_resource_mixin = CardShareResourceMixin.new(api_request, path, object_item_class, @paginator_class)
+      @cs_resource_mixin = CardShareResourceMixin.new(api_request, path,
+                                                      object_item_class,
+                                                      @paginator_class)
     end
 
     # Params:
@@ -111,6 +105,4 @@ module MC2P
       @cs_resource_mixin.share(resource_id, data)
     end
   end
-
 end
-

@@ -1,5 +1,4 @@
 module MC2P
-
   # Paginator - class used on list requests
   class Paginator
     attr_accessor :count
@@ -23,13 +22,13 @@ module MC2P
 
     # Params:
     # Returns: Paginator object with the next items
-    def get_next_list
+    def next_list
       @_next ? @resource.list(abs_url: @_next) : nil
     end
 
     # Params:
     # Returns: Paginator object with the previous items
-    def get_previous_list
+    def previous_list
       @_previous ? @resource.list(abs_url: @_previous) : nil
     end
   end
@@ -47,7 +46,7 @@ module MC2P
       @id_property = 'id'
     end
 
-    # Allows use the following syntax to get a field of the object: 
+    # Allows use the following syntax to get a field of the object:
     #     obj.name
     # Params:
     # +key+:: Field to return
@@ -191,7 +190,8 @@ module MC2P
     end
   end
 
-  # Object item that allows retrieve, create and to get pay_url based on token of an item
+  # Object item that allows retrieve, create and to get pay_url based
+  # on token of an item
   class PayURLCRObjectItem < CRObjectItem
     # Initializes an object item
     # Params:
@@ -215,7 +215,8 @@ module MC2P
     end
   end
 
-  # Resource - class used to manage the requests to the API related with a resource
+  # Resource - class used to manage the requests to the API related with
+  # a resource
   # ex: product
   class Resource < ResourceMixin
     # Initializes a resource
@@ -238,7 +239,9 @@ module MC2P
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
       super(api_request, path, object_item_class)
-      @do_resource_mixin = DetailOnlyResourceMixin.new(api_request, path, object_item_class, @paginator_class)
+      @do_resource_mixin = DetailOnlyResourceMixin.new(api_request, path,
+                                                       object_item_class,
+                                                       @paginator_class)
     end
 
     # Params:
@@ -249,7 +252,6 @@ module MC2P
     end
   end
 
-
   # Resource that allows send requests of list and detail
   class ReadOnlyResource < DetailOnlyResource
     # Initializes a resource
@@ -259,7 +261,9 @@ module MC2P
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
       super(api_request, path, object_item_class)
-      @ro_resource_mixin = ReadOnlyResourceMixin.new(api_request, path, object_item_class, @paginator_class)
+      @ro_resource_mixin = ReadOnlyResourceMixin.new(api_request, path,
+                                                     object_item_class,
+                                                     @paginator_class)
     end
 
     # Params:
@@ -279,7 +283,9 @@ module MC2P
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
       super(api_request, path, object_item_class)
-      @create_resource_mixin = CreateResourceMixin.new(api_request, path, object_item_class, @paginator_class)
+      @create_resource_mixin = CreateResourceMixin.new(api_request, path,
+                                                       object_item_class,
+                                                       @paginator_class)
     end
 
     # Params:
@@ -290,7 +296,8 @@ module MC2P
     end
   end
 
-  # Resource that allows send requests of delete, change, create, list and detail
+  # Resource that allows send requests of delete, change, create,
+  # list and detail
   class CRUDResource < CRResource
     # Initializes a resource
     # Params:
@@ -299,8 +306,12 @@ module MC2P
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
       super(api_request, path, object_item_class)
-      @change_resource_mixin = ChangeResourceMixin.new(api_request, path, object_item_class, @paginator_class)
-      @delete_resource_mixin = DeleteResourceMixin.new(api_request, path, object_item_class, @paginator_class)
+      @change_resource_mixin = ChangeResourceMixin.new(api_request, path,
+                                                       object_item_class,
+                                                       @paginator_class)
+      @delete_resource_mixin = DeleteResourceMixin.new(api_request, path,
+                                                       object_item_class,
+                                                       @paginator_class)
     end
 
     # Params:

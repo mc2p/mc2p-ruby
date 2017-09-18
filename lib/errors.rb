@@ -1,5 +1,4 @@
 module MC2P
-
   # MC2P Error - class used to manage the exceptions related with mc2p library
   class MC2PError < StandardError
     attr_accessor :json_body
@@ -12,7 +11,8 @@ module MC2P
     # +json_body+:: Response from server
     # +resource+:: Class resource used when the error raised
     # +resource_id+:: Resource id requested when the error raised
-    def initialize(message = nil, json_body = nil, resource = nil, resource_id = nil)
+    def initialize(message = nil, json_body = nil,
+                   resource = nil, resource_id = nil)
       super(message)
 
       @_message = message
@@ -29,13 +29,9 @@ module MC2P
 
   # Invalid request error
   class InvalidRequestError < MC2PError
-
   end
-
 
   # Bad use error
   class BadUseError < MC2PError
-
   end
-
 end
