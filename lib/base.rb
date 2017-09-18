@@ -44,6 +44,7 @@ module MC2P
       @json_dict = json_dict.nil? ? {} : json_dict
       @resource = resource
       @_deleted = false
+      @id_property = 'id'
     end
 
     # Allows use the following syntax to get a field of the object: 
@@ -89,9 +90,9 @@ module MC2P
     # +object_id+:: Id to retrieve
     # Returns: Object after retrieve
     def self.get(object_id)
-      obj = self.new({
-                         @@id_property => object_id
-                     }, self.resource)
+      obj = new({
+                  @id_property => object_id
+                }, resource)
       obj.retrieve
       obj
     end
@@ -184,7 +185,7 @@ module MC2P
     def delete
       @delete_mixin.json_dict = @json_dict
       @delete_mixin._deleted = @_deleted
-      @delete_mixin.save
+      @delete_mixin.delete
       @json_dict = @delete_mixin.json_dict
       @_deleted = @delete_mixin._deleted
     end
