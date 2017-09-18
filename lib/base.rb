@@ -52,11 +52,15 @@ module MC2P
     # +key+:: Field to return
     # Returns: Value of the field from json_dict
     def method_missing(key, *args)
-      @json_dict.include?(key) ? @json_dict[key] : super
+      @json_dict.include?(key.to_s) ? @json_dict[key.to_s] : super
     end
 
     def respond_to_missing?(key, include_private = false)
-      @json_dict.include?(key) || super
+      @json_dict.include?(key.to_s) || super
+    end
+
+    def respond_to?(key, include_private = false)
+      @json_dict.include?(key.to_s) || super
     end
 
     # Allows use the following syntax to set a field of the object:
@@ -213,14 +217,13 @@ module MC2P
   # Resource - class used to manage the requests to the API related with a resource
   # ex: product
   class Resource < ResourceMixin
-    @paginator_class = Paginator
-
     # Initializes a resource
     # Params:
     # +api_request+:: Api request used to make all the requests to the API
     # +path+:: Path used to make all the requests to the API
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
+      @paginator_class = Paginator
       super(api_request, path, object_item_class, @paginator_class)
     end
   end
@@ -233,8 +236,8 @@ module MC2P
     # +path+:: Path used to make all the requests to the API
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
-      @do_resource_mixin = DetailOnlyResourceMixin.new(api_request, path, object_item_class, @paginator_class)
       super(api_request, path, object_item_class)
+      @do_resource_mixin = DetailOnlyResourceMixin.new(api_request, path, object_item_class, @paginator_class)
     end
 
     # Params:
@@ -254,8 +257,8 @@ module MC2P
     # +path+:: Path used to make all the requests to the API
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
-      @ro_resource_mixin = ReadOnlyResourceMixin.new(api_request, path, object_item_class, @paginator_class)
       super(api_request, path, object_item_class)
+      @ro_resource_mixin = ReadOnlyResourceMixin.new(api_request, path, object_item_class, @paginator_class)
     end
 
     # Params:
@@ -267,15 +270,15 @@ module MC2P
   end
 
   # Resource that allows send requests of create, list and detail
-  class CRResource < DetailOnlyResource
+  class CRResource < ReadOnlyResource
     # Initializes a resource
     # Params:
     # +api_request+:: Api request used to make all the requests to the API
     # +path+:: Path used to make all the requests to the API
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
-      @create_resource_mixin = CreateResourceMixin.new(api_request, path, object_item_class, @paginator_class)
       super(api_request, path, object_item_class)
+      @create_resource_mixin = CreateResourceMixin.new(api_request, path, object_item_class, @paginator_class)
     end
 
     # Params:
@@ -294,9 +297,9 @@ module MC2P
     # +path+:: Path used to make all the requests to the API
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
+      super(api_request, path, object_item_class)
       @change_resource_mixin = ChangeResourceMixin.new(api_request, path, object_item_class, @paginator_class)
       @delete_resource_mixin = DeleteResourceMixin.new(api_request, path, object_item_class, @paginator_class)
-      super(api_request, path, object_item_class)
     end
 
     # Params:
