@@ -43,8 +43,8 @@ module MC2P
     # +path+:: Path used to make all the requests to the API
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
-      @rcv_resource_mixin = RefundCaptureVoidResourceMixin.new(api_request, path, object_item_class, @paginator_class)
       super(api_request, path, object_item_class)
+      @rcv_resource_mixin = RefundCaptureVoidResourceMixin.new(api_request, path, object_item_class, @paginator_class)
     end
 
     # Params:
@@ -90,8 +90,8 @@ module MC2P
     # +path+:: Path used to make all the requests to the API
     # +object_item_class+:: Object item class used to return values
     def initialize(api_request, path, object_item_class)
-      @cs_resource_mixin = CardShareResourceMixin.new(api_request, path, object_item_class, @paginator_class)
       super(api_request, path, object_item_class)
+      @cs_resource_mixin = CardShareResourceMixin.new(api_request, path, object_item_class, @paginator_class)
     end
 
     # Params:

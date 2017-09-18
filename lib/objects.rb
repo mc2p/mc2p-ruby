@@ -43,8 +43,8 @@ module MC2P
     # +json_dict+:: Data of the object
     # +resource+:: Resource used to delete, save, create or retrieve the object
     def initialize(json_dict, resource)
-      @rcv_mixin = RefundCaptureVoidObjectItemMixin.new(json_dict, resource)
       super(json_dict, resource)
+      @rcv_mixin = RefundCaptureVoidObjectItemMixin.new(json_dict, resource)
     end
 
     # Refund the object item
@@ -104,8 +104,8 @@ module MC2P
     # +json_dict+:: Data of the object
     # +resource+:: Resource used to delete, save, create or retrieve the object
     def initialize(json_dict, resource)
-      @cs_mixin = CardShareObjectItemMixin.new(json_dict, resource)
       super(json_dict, resource)
+      @cs_mixin = CardShareObjectItemMixin.new(json_dict, resource)
     end
 
     # Send card details
