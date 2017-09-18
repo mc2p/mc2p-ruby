@@ -11,4 +11,6 @@ rvm:
 sudo: false
 
 script:
+  - gem build mc2p.gemspec
+  - gem install mc2p-ruby-*
   - ruby tests/mc2p.rb
