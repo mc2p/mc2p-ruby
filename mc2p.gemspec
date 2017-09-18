@@ -3,11 +3,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'mc2p'
 
 Gem::Specification.new do |spec|
-  spec.name          = "MyChoice2Pay"
+  spec.name          = "mc2p-ruby"
   spec.version       = MC2P::VERSION
   spec.authors       = ["MyChoice2Pay"]
   spec.email         = ["hola@mychoice2pay.com"]
-  spec.summary       = %q{Gem for the MyChoice2Pay API.}
+  spec.summary       = "MyChoice2Pay Ruby Gem"
   spec.description   = %q{Gem for the MyChoice2Pay API.}
   spec.homepage      = "https://www.mychoice2pay.com"
   spec.license       = "MIT"
