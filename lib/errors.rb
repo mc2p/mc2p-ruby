@@ -21,8 +21,7 @@ module MC2P
       @resource_id = resource_id
     end
 
-    # Params:
-    # +return+:: Error type and response
+    # Returns: Error type and response
     def to_s
       "#{@_message} #{@json_body}"
     end
