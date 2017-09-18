@@ -6,6 +6,7 @@ require_relative 'mixins'
 require_relative 'base'
 require_relative 'objects'
 require_relative 'resources'
+require_relative 'notification'
 
 module MC2P
   VERSION = '0.1.0'
