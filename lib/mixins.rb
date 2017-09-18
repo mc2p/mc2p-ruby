@@ -243,11 +243,10 @@ module MC2P
     # +abs_url+:: if is passed the request is sent to this url
     # Returns: a paginator class with the response of the server
     def list(abs_url = nil)
-      url = abs_url.nil? ? @path : abs_url
       json_dict = @api_request.get(
+        abs_url.nil? ? @path : nil,
         nil,
-        nil,
-        url,
+        abs_url,
         self
       )
 
