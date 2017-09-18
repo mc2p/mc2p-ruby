@@ -8,12 +8,12 @@ mc2p = MC2P::MC2PClient.new(key, secret)
 # Create transaction
 transaction = mc2p.transaction('currency' => 'EUR',
                                'products' => [{
-                                                  'amount' => 1,
-                                                  'product' => {
-                                                      'name' => 'Product',
-                                                      'price' => 5
-                                                  }
-                                              }])
+                                                'amount' => 1,
+                                                'product' => {
+                                                  'name' => 'Product',
+                                                  'price' => 5
+                                                }
+                               }])
 transaction.save
 transaction.pay_url # Send user to this url to pay
 transaction.iframe_url # Use this url to show an iframe in your site
@@ -43,11 +43,11 @@ transaction.status == 'D' # Paid
 # Create subscription
 subscription = mc2p.subscription('currency' => 'EUR',
                                  'plan' => {
-                                     'name' => 'Plan',
-                                     'price' => 5,
-                                     'duration' => 1,
-                                     'unit' => 'M',
-                                     'recurring' => true
+                                   'name' => 'Plan',
+                                   'price' => 5,
+                                   'duration' => 1,
+                                   'unit' => 'M',
+                                   'recurring' => true
                                  },
                                  'note' => 'Note example'
 )

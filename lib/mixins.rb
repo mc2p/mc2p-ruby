@@ -16,7 +16,7 @@ module MC2P
     def id_required_and_not_deleted
       raise BadUseError('Object don\'t have ID') unless
           @json_dict.fetch(@id_property, false)
-      raise BadUseError('Object deleted') unless @_deleted
+      raise BadUseError('Object deleted') if @_deleted
     end
 
     # Returns: Name of the object and content
