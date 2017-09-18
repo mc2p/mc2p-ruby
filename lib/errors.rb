@@ -12,7 +12,7 @@ module MC2P
     # +json_body+:: Response from server
     # +resource+:: Class resource used when the error raised
     # +resource_id+:: Resource id requested when the error raised
-    def initialize(message=nil, json_body=nil, resource=nil, resource_id=nil)
+    def initialize(message = nil, json_body = nil, resource = nil, resource_id = nil)
       super(message)
 
       @_message = message
