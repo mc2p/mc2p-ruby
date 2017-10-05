@@ -399,7 +399,7 @@ module MC2P
     def charge(resource_id, data = nil)
       _one_item_action('post200',
                        resource_id,
-                       'refund',
+                       'charge',
                        data)
     end
   end

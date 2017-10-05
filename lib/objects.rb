@@ -50,7 +50,7 @@ module MC2P
     # Params:
     # +data+:: data to send
     # Returns: response dictionary
-    def refund(data = nil)
+    def charge(data = nil)
       @charge_mixin.json_dict = @json_dict
       @charge_mixin._deleted = @_deleted
       @charge_mixin.charge(data)
