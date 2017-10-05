@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "mc2p-ruby"
-  spec.version       = "0.1.2"
+  spec.version       = "0.1.3"
   spec.authors       = ["MyChoice2Pay"]
   spec.email         = ["hola@mychoice2pay.com"]
   spec.summary       = "MyChoice2Pay Ruby Gem"
