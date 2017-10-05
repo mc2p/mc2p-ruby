@@ -55,6 +55,12 @@ subscription.save
 subscription.pay_url # Send user to this url to pay
 subscription.iframe_url # Use this url to show an iframe in your site
 
+# Create authorization
+authorization = mc2p.authorization('currency' => 'EUR')
+authorization.save
+authorization.pay_url # Send user to this url to pay
+authorization.iframe_url # Use this url to show an iframe in your site
+
 # Receive a notification
 notification_data = mc2p.notification_data('status' => 'D', 'type' => 'P',
                                            'id' => 'c8325bb3-c24e-4c0c-b0ff-14fe89bf9f1f',
