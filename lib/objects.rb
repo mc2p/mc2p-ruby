@@ -31,9 +31,32 @@ module MC2P
   end
 
   # Subscription object
-
   class Subscription < PayURLCRObjectItem
 
+  end
+
+  # Authorization object
+  class Authorization < PayURLCRObjectItem
+    # Initializes an object item
+    # Params:
+    # +json_dict+:: Data of the object
+    # +resource+:: Resource used to delete, save, create or retrieve the object
+    def initialize(json_dict, resource)
+      super(json_dict, resource)
+      @charge_mixin = ChargeObjectItemMixin.new(json_dict, resource)
+    end
+
+    # Charge the object item
+    # Params:
+    # +data+:: data to send
+    # Returns: response dictionary
+    def refund(data = nil)
+      @charge_mixin.json_dict = @json_dict
+      @charge_mixin._deleted = @_deleted
+      @charge_mixin.charge(data)
+      @json_dict = @charge_mixin.json_dict
+      @_deleted = @charge_mixin._deleted
+    end
   end
 
   # Sale object

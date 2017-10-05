@@ -27,6 +27,29 @@ module MC2P
   class SubscriptionResource < CRResource
   end
 
+  # Authorization resource
+  class AuthorizationResource < CRResource
+    # Initializes a resource
+    # Params:
+    # +api_request+:: Api request used to make all the requests to the API
+    # +path+:: Path used to make all the requests to the API
+    # +object_item_class+:: Object item class used to return values
+    def initialize(api_request, path, object_item_class)
+      super(api_request, path, object_item_class)
+      @charge_resource_mixin = ChargeResourceMixin.new(api_request, path,
+                                                       object_item_class,
+                                                       @paginator_class)
+    end
+
+    # Params:
+    # +resource_id+:: id to request
+    # +data+:: data to send
+    # Returns: response dictionary
+    def charge(resource_id, data = nil)
+      @charge_resource_mixin.charge(resource_id, data)
+    end
+  end
+
   # Sale resource
   class SaleResource < ReadOnlyResource
     # Initializes a resource

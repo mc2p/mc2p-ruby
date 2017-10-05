@@ -56,6 +56,9 @@ module MC2P
       @subscription_resource = SubscriptionResource.new(@api_request,
                                                         '/subscription/',
                                                         Subscription)
+      @authorization_resource = AuthorizationResource.new(@api_request,
+                                                          '/authorization/',
+                                                          Authorization)
       @sale_resource = SaleResource.new(@api_request,
                                         '/sale/',
                                         Sale)
@@ -100,6 +103,10 @@ module MC2P
 
     def subscription(data)
       _wrapper(Subscription, @subscription_resource, data)
+    end
+
+    def authorization(data)
+      _wrapper(Authorization, @authorization_resource, data)
     end
 
     def sale(data)

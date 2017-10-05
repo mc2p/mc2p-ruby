@@ -156,6 +156,21 @@ module MC2P
     end
   end
 
+  # Allows make charge an object item
+  class ChargeObjectItemMixin < ObjectItemMixin
+    # Refund the object item
+    # Params:
+    # +data+:: data to send
+    # Returns: response dictionary
+    def charge(data = nil)
+      id_required_and_not_deleted
+      @resource.charge(
+          @json_dict[@id_property],
+          data
+      )
+    end
+  end
+
   # Add property to get pay_url based on token
   class PayURLMixin < ObjectItemMixin
     def initialize(json_dict, resource)
@@ -371,6 +386,20 @@ module MC2P
       _one_item_action('post',
                        resource_id,
                        'share',
+                       data)
+    end
+  end
+
+  # Allows send action requests of charge
+  class ChargeResourceMixin < ActionsResourceMixin
+    # Params:
+    # +resource_id+:: id to request
+    # +data+:: data to send
+    # Returns: response dictionary
+    def charge(resource_id, data = nil)
+      _one_item_action('post200',
+                       resource_id,
+                       'refund',
                        data)
     end
   end

@@ -20,6 +20,11 @@ module MC2P
       @json_body['subscription_status']
     end
 
+    # Returns: status of authorization
+    def authorization_status
+      @json_body['authorization_status']
+    end
+
     # Returns: type of payment
     def type
       @json_body['type']
